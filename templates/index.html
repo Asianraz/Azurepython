@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pokemon Explorer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="container">
+    <h1>Pokemon Explorer</h1>
+    <p class="subtitle">Search any Pokemon.</p>
+
+    <form action="/" method="get" class="search-form">
+      <input
+        type="text"
+        name="name"
+        placeholder="Try pikachu, bulbasaur, charizard..."
+        value="{{ query }}"
+        required
+      >
+      <button type="submit">Search</button>
+      <a href="/random" class="random-link">Random</a>
+    </form>
+
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if pokemon %}
+      <section class="card">
+        {% if pokemon.image %}
+          <img src="{{ pokemon.image }}" alt="{{ pokemon.name }} image" class="pokemon-image">
+        {% endif %}
+        <h2>#{{ pokemon.id }} {{ pokemon.name }}</h2>
+        <p><strong>Type:</strong> {{ pokemon.types | join(', ') }}</p>
+        <p><strong>Abilities:</strong> {{ pokemon.abilities | join(', ') }}</p>
+        <p><strong>Height:</strong> {{ pokemon.height }}</p>
+        <p><strong>Weight:</strong> {{ pokemon.weight }}</p>
+      </section>
+    {% endif %}
+  </main>
+</body>
+</html>
